@@ -11,4 +11,6 @@
     <color name="blue_darker">#0068ab</color>
     <color name="blue_lighter">#6ec5ff</color>
     <color name="default_text">#757575</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="white_darker">#FBFBFB</color>
 </resources>
