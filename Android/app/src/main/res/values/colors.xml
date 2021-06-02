@@ -13,4 +13,5 @@
     <color name="default_text">#757575</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="white_darker">#FBFBFB</color>
+    <color name="pink">#fc4482</color>
 </resources>

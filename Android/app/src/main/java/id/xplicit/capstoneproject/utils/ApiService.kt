@@ -7,7 +7,7 @@ import retrofit2.http.*
 
 interface ApiService {
     @Multipart
-    @POST("/")
+    @POST("/xplicit-app")
     fun getPredictionResult(
         @Header("apikey") apiKey: String,
         @Part image: MultipartBody.Part,

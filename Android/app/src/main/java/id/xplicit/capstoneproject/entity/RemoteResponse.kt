@@ -1,6 +1,8 @@
 package id.xplicit.capstoneproject.entity
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
 data class RemoteResponse(
 	@field:Json(name="disease_found")
@@ -16,6 +18,7 @@ data class RemoteResponse(
 	val status: String
 )
 
+@Parcelize
 data class Message(
 	@field:Json(name="treatment_tips")
 	val treatmentTips: String,
@@ -28,5 +31,5 @@ data class Message(
 
 	@field:Json(name="disease_name")
 	val diseaseName: String
-)
+): Parcelable
 

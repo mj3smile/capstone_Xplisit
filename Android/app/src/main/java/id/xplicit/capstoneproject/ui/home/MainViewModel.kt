@@ -2,19 +2,18 @@ package id.xplicit.capstoneproject.ui.home
 
 import android.app.Application
 import android.content.ContentValues
-import android.database.Cursor
 import android.net.Uri
 import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import id.xplicit.capstoneproject.entity.Message
 import id.xplicit.capstoneproject.entity.RemoteResponse
 import id.xplicit.capstoneproject.utils.ApiConfig.getApiService
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import id.xplicit.capstoneproject.utils.FileUtils
+import id.xplicit.capstoneproject.utils.ProgressRequestBody
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +29,12 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val _isUploadSuccess = MutableLiveData<Boolean>()
     val isUploadSuccess: LiveData<Boolean> = _isUploadSuccess
 
+    private val _uploadProgress = MutableLiveData<Int>()
+    val uploadProgress: LiveData<Int> = _uploadProgress
+
+    private val _predictionResult = MutableLiveData<Message>()
+    val predictionResult: LiveData<Message> = _predictionResult
+
     fun createImageFile(): File {
         val context = getApplication<Application>().applicationContext
         val timeStamp = SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(Date())
@@ -42,22 +47,38 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         )
     }
 
-    fun getPrediction(imageUri: Uri) {
+    fun getPrediction(imageUri: Uri?, imagePath: String?) {
         val apiKey = "7a1a1912b05572cc68f598b77e3d17b7"
-        val file = File(Environment.getDataDirectory().toString(), imageUri.path ?: "")
-        val requestBody = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+
+        val file: File = if (imageUri != null) {
+            val context = getApplication<Application>().applicationContext
+            File(FileUtils.getPathFromUri(context, imageUri) ?: "")
+        } else {
+            File(imagePath ?: "")
+        }
+
+        val requestBody = ProgressRequestBody(file, "image")
+        requestBody.setUploadCallbacks(object: ProgressRequestBody.UploadCallbacks {
+            override fun onProgressUpdate(percentage: Int) {
+                _uploadProgress.value = percentage
+                Log.i(ContentValues.TAG, "progressUpload: ${percentage}%")
+            }
+        })
+
         val body: MultipartBody.Part = MultipartBody.Part.createFormData("image", file.name, requestBody)
         val client = getApiService().getPredictionResult(apiKey, body)
 
         client.enqueue(object: Callback<RemoteResponse> {
             override fun onResponse(call: Call<RemoteResponse>, response: Response<RemoteResponse>) {
-                _isDiseaseFound.value = false
-                _isUploadSuccess.value = false
-
                 if (response.isSuccessful) {
                     _isDiseaseFound.value = response.body()?.diseaseFound
+                    _predictionResult.value = response.body()?.message
                     _isUploadSuccess.value = true
+                    _uploadProgress.value = 100
                 } else {
+                    _isUploadSuccess.value = false
+                    _isDiseaseFound.value = false
+                    _uploadProgress.value = 100
                     Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
                 }
             }
@@ -65,6 +86,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             override fun onFailure(call: Call<RemoteResponse>, t: Throwable) {
                 _isUploadSuccess.value = false
                 _isDiseaseFound.value = false
+                _uploadProgress.value = 100
                 Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
             }
         })
