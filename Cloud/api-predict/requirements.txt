@@ -1,6 +1,9 @@
+# Function dependencies, for example:
+# package>=version
+
 requests==2.21.0
-google-cloud-storage==1.17.0
+google-cloud-storage==1.38.0
 numpy==1.19.5
-keras==2.4.3
+keras==2.5.0rc0
 tensorflow==2.5.0
 pillow==7.2.0
