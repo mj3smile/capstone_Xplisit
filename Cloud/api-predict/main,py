@@ -14,9 +14,9 @@ storage_client = storage.Client()
 bucket = storage_client.get_bucket('model-bucket-nails')
 
 # download model.json and model.h5 to local machine
-blob = bucket.blob('model/model.json')
+blob = bucket.blob('model-1/model.json')
 blob.download_to_filename('/tmp/model.json')
-blob2 = bucket.blob('model/model.h5')
+blob2 = bucket.blob('model-1/model.h5')
 blob2.download_to_filename('/tmp/model.h5')
 
 # get model from model.json
@@ -28,11 +28,6 @@ model = model_from_json(model_json)
 # load weights from model.h5 from bucket into new model
 model.load_weights("/tmp/model.h5")
 print("Load weights into new model")
-
-# compile and evaluate model
-model.compile(loss = 'categorical_crossentropy', 
-              optimizer='rmsprop', 
-              metrics=['accuracy'])
 
 # function to predict
 def make_prediction(request):
@@ -83,6 +78,7 @@ def make_prediction(request):
         print(path)
         print(str(prediction))
 
+        # get disease name and percentage
         res = "{} | {:2.0f}%".format(CATEGORIES[np.argmax(prediction)], 100*np.max(prediction))
 
         res = res.split(' | ')
@@ -90,6 +86,8 @@ def make_prediction(request):
         percent = res[1]
 
         data = {}
+        
+        # check for unhealthy nails
         if name != 'normal':
             # get the details from bucket
             blob3 = bucket.blob('data/'+ name + '.txt')
@@ -97,12 +95,20 @@ def make_prediction(request):
             details = details.decode('utf-8')
             details = details.split(';;')
 
+            data['is_nail'] = True
+            data['is_disease_match'] = True
             data['name'] = details[0]
-            data['percent'] = percent
+            data['accuracy'] = percent
             data['desc'] = details[1]
             data['treat'] = details[2]
         
+        # check for healthy nails
         elif name == 'normal':
-            data['name'] = name
+            data['is_nail'] = True
+            data['is_disease_match'] = False
+            data['name'] = ""
+            data['accuracy'] = ""
+            data['desc'] = ""
+            data['treat'] = ""
 
-        return data       
+        return data        
