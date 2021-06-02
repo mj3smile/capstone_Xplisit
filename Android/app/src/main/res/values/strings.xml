@@ -20,4 +20,11 @@
     <string name="detail_activity_toolbar_title">Analysis Result</string>
     <string name="analysed_picture_desc">Analysed Picture</string>
     <string name="result_illustration_desc">Result Illustration</string>
+    <string name="process_failed_illustration">Process Failed</string>
+    <string name="oops_text">Oops!</string>
+    <string name="upload_error_message">The analyzing process has been failed, please try again</string>
+    <string name="btn_fail_text">Back to home</string>
+    <string name="analyze_progress_text">Analyzing ...</string>
+    <string name="disease_not_found_message">We cannot identified any disease from picture that you\'ve sent</string>
+    <string name="nail_object_error_message">We don\'t found any nail object in picture that you\'ve sent. Please try again.</string>
 </resources>

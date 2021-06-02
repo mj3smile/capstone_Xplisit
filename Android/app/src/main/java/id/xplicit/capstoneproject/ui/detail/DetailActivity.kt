@@ -2,7 +2,6 @@ package id.xplicit.capstoneproject.ui.detail
 
 import android.content.res.Resources
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
@@ -11,11 +10,10 @@ import android.util.TypedValue
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.material.appbar.AppBarLayout
 import id.xplicit.capstoneproject.R
 import id.xplicit.capstoneproject.databinding.ActivityDetailBinding
+import id.xplicit.capstoneproject.entity.Message
 import java.io.IOException
-import kotlin.math.abs
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -28,7 +26,9 @@ class DetailActivity : AppCompatActivity() {
 
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        val responseMessage = intent.getParcelableExtra<Message>(RESPONSE_EXTRA)
         val imageUri = Uri.parse(intent.getStringExtra(IMAGE_URI_EXTRA))
+        setResponseToView(responseMessage)
         setDetailImage(imageUri)
         binding.appBar.setExpanded(false)
         binding.toolbarLayout.title = getString(R.string.detail_activity_toolbar_title)
@@ -73,7 +73,14 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun setResponseToView(response: Message?) {
+        binding.tvDiseaseName.text = response?.diseaseName
+        binding.tvDescription.text = response?.description
+        binding.tvTips.text = response?.treatmentTips
+    }
+
     companion object {
         const val IMAGE_URI_EXTRA = "image_uri_extra"
+        const val RESPONSE_EXTRA = "response_extra"
     }
 }

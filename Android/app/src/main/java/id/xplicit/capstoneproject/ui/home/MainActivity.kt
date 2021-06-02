@@ -21,6 +21,7 @@ import java.io.File
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var pictureURI: Uri
+    private lateinit var picturePath: String
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun takePicture() {
         if (hasCameraPermission() and hasReadStoragePermission() and hasWriteStoragePermission()) {
             val pictureFile: File = viewModel.createImageFile()
+            picturePath = pictureFile.absolutePath
             pictureFile.also {
                 pictureURI = FileProvider.getUriForFile(
                     this,
@@ -74,6 +76,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (success) {
             val intent = Intent(this, PreviewImageActivity::class.java)
             intent.putExtra(PreviewImageActivity.IMAGE_URI_EXTRA, pictureURI.toString())
+            intent.putExtra(PreviewImageActivity.IMAGE_PATH_EXTRA, picturePath)
             startActivity(intent)
         }
     }

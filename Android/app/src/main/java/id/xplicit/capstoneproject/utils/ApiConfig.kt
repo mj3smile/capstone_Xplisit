@@ -13,7 +13,7 @@ object ApiConfig {
             .addInterceptor(loggingInterceptor)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://118.98.121.229/xplicit-app/")
+            .baseUrl("https://118.98.121.229/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()
