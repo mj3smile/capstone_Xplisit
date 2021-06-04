@@ -43,7 +43,7 @@ We will create 2 API with each model
       <li>On Cloud Functions, click <code>CREATE FUNCTION</code></li>
       <li>Give name of the function</li>
       <li>Specify the location</li>
-      <blockquote>For latency, choose the nearest location to where you want the function will be called </blockquote>
+      <blockquote>For latency, choose the nearest location to where you want the Functions will be called </blockquote>
       <li>Choose the trigger type</li>
       <blockquote>For this project, choose <code>HTTP</code></blockquote>
       <li>For the <code>Authentication</code>, select <code>Allow unauthenticated invocations</code></li>
