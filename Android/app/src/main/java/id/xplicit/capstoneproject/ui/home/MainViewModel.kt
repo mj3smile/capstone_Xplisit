@@ -8,7 +8,6 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import id.xplicit.capstoneproject.entity.Message
 import id.xplicit.capstoneproject.entity.RemoteResponse
 import id.xplicit.capstoneproject.utils.ApiConfig.getApiService
 import id.xplicit.capstoneproject.utils.FileUtils
@@ -26,14 +25,17 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val _isDiseaseFound = MutableLiveData<Boolean>()
     val isDiseaseFound: LiveData<Boolean> = _isDiseaseFound
 
+    private val _isNailRecognized = MutableLiveData<Boolean>()
+    val isNailRecognized: LiveData<Boolean> = _isNailRecognized
+
     private val _isUploadSuccess = MutableLiveData<Boolean>()
     val isUploadSuccess: LiveData<Boolean> = _isUploadSuccess
 
     private val _uploadProgress = MutableLiveData<Int>()
     val uploadProgress: LiveData<Int> = _uploadProgress
 
-    private val _predictionResult = MutableLiveData<Message>()
-    val predictionResult: LiveData<Message> = _predictionResult
+    private val _predictionResult = MutableLiveData<RemoteResponse>()
+    val predictionResult: LiveData<RemoteResponse> = _predictionResult
 
     fun createImageFile(): File {
         val context = getApplication<Application>().applicationContext
@@ -66,13 +68,14 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         })
 
         val body: MultipartBody.Part = MultipartBody.Part.createFormData("image", file.name, requestBody)
-        val client = getApiService().getPredictionResult(apiKey, body)
+        val client = getApiService().getPredictionResult(body)
 
         client.enqueue(object: Callback<RemoteResponse> {
             override fun onResponse(call: Call<RemoteResponse>, response: Response<RemoteResponse>) {
                 if (response.isSuccessful) {
-                    _isDiseaseFound.value = response.body()?.diseaseFound
-                    _predictionResult.value = response.body()?.message
+                    _isDiseaseFound.value = response.body()?.isDiseaseMatch
+                    _isNailRecognized.value = response.body()?.isNail
+                    _predictionResult.value = response.body()
                     _isUploadSuccess.value = true
                     _uploadProgress.value = 100
                 } else {

@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import id.xplicit.capstoneproject.R
 import id.xplicit.capstoneproject.databinding.ActivityDetailBinding
-import id.xplicit.capstoneproject.entity.Message
+import id.xplicit.capstoneproject.entity.RemoteResponse
 import java.io.IOException
 
 class DetailActivity : AppCompatActivity() {
@@ -26,7 +26,7 @@ class DetailActivity : AppCompatActivity() {
 
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val responseMessage = intent.getParcelableExtra<Message>(RESPONSE_EXTRA)
+        val responseMessage = intent.getParcelableExtra<RemoteResponse>(RESPONSE_EXTRA)
         val imageUri = Uri.parse(intent.getStringExtra(IMAGE_URI_EXTRA))
         setResponseToView(responseMessage)
         setDetailImage(imageUri)
@@ -73,10 +73,11 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setResponseToView(response: Message?) {
-        binding.tvDiseaseName.text = response?.diseaseName
-        binding.tvDescription.text = response?.description
-        binding.tvTips.text = response?.treatmentTips
+    private fun setResponseToView(response: RemoteResponse?) {
+        binding.tvDiseaseName.text = response?.name
+        binding.tvDescription.text = response?.desc
+        binding.tvTips.text = response?.treat
+        binding.tvAccuracy.text = response?.accuracy
     }
 
     companion object {

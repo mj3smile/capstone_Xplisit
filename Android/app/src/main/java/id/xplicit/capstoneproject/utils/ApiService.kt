@@ -7,9 +7,8 @@ import retrofit2.http.*
 
 interface ApiService {
     @Multipart
-    @POST("/xplicit-app")
+    @POST("/main-app")
     fun getPredictionResult(
-        @Header("apikey") apiKey: String,
-        @Part image: MultipartBody.Part,
+        @Part image: MultipartBody.Part
     ): Call<RemoteResponse>
 }

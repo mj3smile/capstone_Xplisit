@@ -4,27 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.error.ErrorActivity">
 
     <ImageView
         android:id="@+id/img_failed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/upload_error"
+        android:src="@drawable/disease_not_found_error"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_oops"
+        app:layout_constraintBottom_toTopOf="@id/tv_expression_message"
         android:contentDescription="@string/process_failed_illustration" />
 
     <TextView
-        android:id="@+id/tv_oops"
+        android:id="@+id/tv_expression_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/oops_text"
+        android:text="@string/expression_error_text_1"
         android:textSize="28sp"
         android:textStyle="bold"
+        android:textColor="@color/default_text"
         app:layout_constraintTop_toBottomOf="@id/img_failed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -36,12 +38,13 @@
         android:layout_height="wrap_content"
         android:text="@string/upload_error_message"
         android:textSize="18sp"
+        android:textColor="@color/default_text"
         android:gravity="center"
         android:lineSpacingExtra="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_oops"
+        app:layout_constraintTop_toBottomOf="@id/tv_expression_message"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_home"/>

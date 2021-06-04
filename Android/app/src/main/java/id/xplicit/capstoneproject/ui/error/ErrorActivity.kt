@@ -19,12 +19,13 @@ class ErrorActivity : AppCompatActivity() {
                 binding.imgFailed.setImageResource(R.drawable.upload_error)
             }
             DISEASE_NOT_FOUND_ERROR_CODE -> {
+                binding.tvExpressionMessage.text = getString(R.string.expression_error_text_2)
                 binding.tvFailMessage.text = getString(R.string.disease_not_found_message)
-                binding.imgFailed.setImageResource(R.drawable.upload_error)
+                binding.imgFailed.setImageResource(R.drawable.disease_not_found_error)
             }
             NOT_NAIL_OBJECT_ERROR_CODE -> {
                 binding.tvFailMessage.text = getString(R.string.nail_object_error_message)
-                binding.imgFailed.setImageResource(R.drawable.upload_error)
+                binding.imgFailed.setImageResource(R.drawable.object_error)
             }
         }
 

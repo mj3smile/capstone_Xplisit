@@ -5,55 +5,109 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.home.PreviewImageActivity">
 
-    <ImageView
-        android:id="@+id/img_preview"
-        android:layout_width="400dp"
-        android:layout_height="480dp"
-        android:contentDescription="@string/preview_image_desc"
-        app:layout_constraintVertical_chainStyle="packed"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/preview_image_card"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="18dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_question" />
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <TextView
-        android:id="@+id/tv_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_marginTop="30dp"
-        android:text="@string/preview_image_question"
-        app:layout_constraintTop_toBottomOf="@id/img_preview"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_no" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
-    <Button
-        android:id="@+id/btn_no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_no_text"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintTop_toBottomOf="@id/tv_question"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_yes"
-        app:layout_constraintBottom_toBottomOf="parent" />
+            <ImageView
+                android:id="@+id/img_preview"
+                android:layout_width="320dp"
+                android:layout_height="410dp"
+                android:contentDescription="@string/preview_image_desc"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_question"/>
 
-    <Button
-        android:id="@+id/btn_yes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_yes_text"
-        app:layout_constraintTop_toTopOf="@id/btn_no"
-        app:layout_constraintLeft_toRightOf="@id/btn_no"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/btn_no" />
+            <TextView
+                android:id="@+id/tv_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center"
+                android:text="@string/preview_image_question"
+                android:textSize="16sp"
+                android:textColor="@color/default_text"
+                android:lineSpacingExtra="8dp"
+                app:layout_constraintTop_toBottomOf="@id/img_preview"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/btn_true"/>
+
+            <ImageButton
+                android:id="@+id/btn_true"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_round_check"
+                android:background="@drawable/round_button_bg"
+                app:layout_constraintTop_toBottomOf="@id/tv_question"
+                app:layout_constraintLeft_toRightOf="@id/btn_false"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_btn_true"
+                android:contentDescription="@string/btn_true_desc" />
+
+            <TextView
+                android:id="@+id/tv_btn_true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/btn_true_text"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                android:textColor="?android:attr/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@id/btn_true"
+                app:layout_constraintLeft_toLeftOf="@id/btn_true"
+                app:layout_constraintRight_toRightOf="@id/btn_true"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/btn_false"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_baseline_clear"
+                android:background="@drawable/round_button_bg"
+                app:layout_constraintTop_toTopOf="@id/btn_true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_true"
+                app:layout_constraintBottom_toBottomOf="@id/btn_true"
+                android:contentDescription="@string/btn_false_desc" />
+
+            <TextView
+                android:id="@+id/tv_btn_false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/btn_false_text"
+                android:textSize="12sp"
+                android:textColor="?android:attr/colorPrimary"
+                android:textAllCaps="true"
+                app:layout_constraintTop_toBottomOf="@id/btn_false"
+                app:layout_constraintLeft_toLeftOf="@id/btn_false"
+                app:layout_constraintRight_toRightOf="@id/btn_false"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tv_progress_status"

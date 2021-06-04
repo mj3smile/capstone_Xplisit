@@ -13,7 +13,7 @@ object ApiConfig {
             .addInterceptor(loggingInterceptor)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://118.98.121.229/")
+            .baseUrl("https://asia-southeast2-continual-block-312109.cloudfunctions.net/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()
