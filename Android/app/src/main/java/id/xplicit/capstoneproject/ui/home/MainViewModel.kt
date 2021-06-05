@@ -10,13 +10,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import id.xplicit.capstoneproject.entity.RemoteResponse
 import id.xplicit.capstoneproject.utils.ApiConfig.getApiService
-import id.xplicit.capstoneproject.utils.FileUtils
 import id.xplicit.capstoneproject.utils.ProgressRequestBody
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -50,13 +51,15 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun getPrediction(imageUri: Uri?, imagePath: String?) {
-        val apiKey = "7a1a1912b05572cc68f598b77e3d17b7"
+        val file: File?
 
-        val file: File = if (imageUri != null) {
+        if (imagePath == null && imageUri != null) {
             val context = getApplication<Application>().applicationContext
-            File(FileUtils.getPathFromUri(context, imageUri) ?: "")
+            file = createImageFile()
+            val inputStream = context.contentResolver.openInputStream(imageUri)
+            copyStreamToFile(inputStream, file)
         } else {
-            File(imagePath ?: "")
+            file = File(imagePath ?: "")
         }
 
         val requestBody = ProgressRequestBody(file, "image")
@@ -93,5 +96,22 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
             }
         })
+    }
+
+    private fun copyStreamToFile(inputStream: InputStream?, outputFile: File) {
+        inputStream.use { input ->
+            val outputStream = FileOutputStream(outputFile)
+            outputStream.use { output ->
+                val buffer = ByteArray(4 * 1024)
+                while (true) {
+                    val byteCount = input?.read(buffer)
+                    if (byteCount != null) {
+                        if (byteCount < 0) break
+                        output.write(buffer, 0, byteCount)
+                    }
+                }
+                output.flush()
+            }
+        }
     }
 }
