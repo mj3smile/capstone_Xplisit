@@ -14,7 +14,7 @@
   <li>Connect the project to your billing account</li>
   <li>Enable necessary APIs and Services. 
     <code>
-      Cloud Build API, Cloud Functions API, Cloud Storage
+      Cloud Build API, Cloud Functions API, Cloud Storage, Cloud Scheduler API
     </code>
   </li>
 </ol>
@@ -35,46 +35,50 @@
   </li>
 </ol>
 <h4>Cloud Functions</h4>
-We will create 2 API with each model
-<ul>
-  <li><h5>Create Functions to connect with first model</h5>
-    <blockquote>This Functions will check whether the image is nail or not based on the model prediction result</blockquote>
-    <ol type="1">
-      <li>On Cloud Functions, click <code>CREATE FUNCTION</code></li>
-      <li>Give name of the function</li>
-      <li>Specify the location</li>
-      <blockquote>For latency, choose the nearest location to where you want the Functions will be called </blockquote>
-      <li>Choose the trigger type</li>
-      <blockquote>For this project, choose <code>HTTP</code></blockquote>
-      <li>For the <code>Authentication</code>, select <code>Allow unauthenticated invocations</code></li>
-      <li>Open the <code>RUNTIME, BUILD AND CONNECTION SETTINGS</code></li>
-      <li>For the <code>Memory allocated</code>, choose the one that suits your needs</li>
-      <li>Click <code>NEXT</code></li>
-      <li>For the <code>Runtime</code>, choose <code>Python 3.7</code></li>
-      <li>For the <code>Source code</code>, choose <code>Inline Editor</code></li>
-      <li>For the <code>main.py</code>, copy the code on <code>Cloud/api-filter/main.py</code></li>
-      <li>For the <code>requirements.txt</code>, copy the library or packages needed on <code>Cloud/api-filter/requirements.txt</code></li>
-      <li>Last but not least, for the <code>Entry point</code>, fill it with the function on the code that will be run by Cloud Functions</li>
-      <blockquote>Based on code on main.py, you should fill the Entry point with <code>"filtering"</code> -> without <code>""</code></blockquote>
-      <li>Click <code>DEPLOY</code></li>
-      <li>Wait until the Functions is ready to use</li>
-      <blockquote>If there is a green checkmark beside the Functions name, then the Functions is successfully deployed</blockquote>
-    </ol>
+<ol type="1">
+    <li>On Cloud Functions, click <code>CREATE FUNCTION</code></li>
+    <li>Give name of the function</li>
+    <li>Specify the location</li>
+    <blockquote>For latency, choose the nearest location to where you want the Functions will be called </blockquote>
+    <li>Choose the trigger type</li>
+    <blockquote>For this project, choose <code>HTTP</code></blockquote>
+    <li>For the <code>Authentication</code>, select <code>Allow unauthenticated invocations</code></li>
+    <li>Check the <code>Require HTTPS</code> checkbox</li>
+    <li>Open the <code>RUNTIME, BUILD AND CONNECTION SETTINGS</code></li>
+    <li>For the <code>Memory allocated</code>, choose the one that suits your needs</li>
+    <li>Click <code>NEXT</code></li>
+    <li>For the <code>Runtime</code>, choose <code>Python 3.7</code></li>
+    <li>For the <code>Source code</code>, choose <code>Inline Editor</code></li>
+    <li>For the <code>main.py</code>, copy the code on <code>Cloud/api/main.py</code></li>
+    <li>For the <code>requirements.txt</code>, copy the library or packages needed on <code>Cloud/api/requirements.txt</code></li>
+    <li>For the <code>utils.py</code>, copy the code on <code>Cloud/api/utils.py</code></li>
+    <li>Last but not least, for the <code>Entry point</code>, fill it with the function on the main.py that will be run by Cloud Functions</li>
+    <blockquote>Based on code on main.py, you should fill the Entry point with <code>"index"</code> -> without <code>""</code></blockquote>
+    <li>Click <code>DEPLOY</code></li>
+    <li>Wait until the Functions is ready to use</li>
+    <blockquote>If there is a green checkmark beside the Functions name, then the Functions is successfully deployed</blockquote>
+</ol>
+<h4>Cloud Scheduler</h4>
+<ol type="1">
+  <li>Click <code>CREATE JOB</code></li>
+  <li>Give name of the job</li>
+  <li>Add description if necessary</li>
+  <li>For <code>Frequency</code>, fill it with <code>"* * * * *"</code> -> without <code>""</code>
+    <blockquote>This will run the job every 1 minute</blockquote>
   </li>
-  <li><h5>Create Functions to connect with second model</h5>
-    <blockquote>This Functions will make a prediction of the image based on the model</blockquote>
-    <ol type="1">
-      <li>Just follow the steps for create the first Functions</li>
-      <li>For the <code>main.py</code>, copy the code on <code>Cloud/api-predict/main.py</code></li>
-      <li>For the <code>requirements.txt</code>, copy the library or packages needed on <code>Cloud/api-predict/requirements.txt</code></li>
-      <li>For the <code>Entry point</code>, fill it with the function on the code that will be run by Cloud Functions</li>
-      <blockquote>Based on code on main.py, you should fill the Entry point with <code>"make_prediction"</code> -> without <code>""</code></blockquote>
-    </ol>
-  </li>
-</ul>
+  <li>For <code>Timezone</code>, it's up to you or you can adjust it with your timezone</li>
+  <li>For <code>Target type</code>, choose <code>HTTP</code></li>
+  <li>For <code>URL</code>, fill it with the url link on your Cloud Functions-><code>TRIGGER</code> tab</li>
+  <li>For <code>HTTP method</code>, choose <code>POST</code></li>
+  <li>For <code>HTTP headers</code>, click <code>ADD A HEADER</code></li>
+  <li>For the <code>Name</code> and <code>Value</code>, fill it with <code>User-Agent</code> and <code>Google-Cloud-Scheduler</code></li>
+  <li>For <code>Max retry attempts</code>, choose <code>1</code></li>
+  <li>Click <code>CREATE</code></li>
+  <li>Wait until the <code>State</code> is <code>Enabled</code></li>
+</ol>
 <h4>How the Android app call the API</h4>
 <ul>
-  <li>Open your Cloud Functions that connect to <code>first model</code>
+  <li>Open your Cloud Functions
   <li>On the <code>TRIGGER</code> tab, you will see a url link. For example:</li>
   <blockquote>https://asia-southeast2-continual-block-87495.cloudfunctions.net/YOUR_FUNCTION_NAME</blockquote>
   <li>Use the url link for the code on Android app</li>
