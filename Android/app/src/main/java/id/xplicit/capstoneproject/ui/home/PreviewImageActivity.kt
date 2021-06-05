@@ -40,8 +40,8 @@ class PreviewImageActivity : AppCompatActivity(), View.OnClickListener {
         imagePath = intent.getStringExtra(IMAGE_PATH_EXTRA)
         setPreviewImage(imageUri)
 
-        binding.btnNo.setOnClickListener(this)
-        binding.btnYes.setOnClickListener(this)
+        binding.btnFalse.setOnClickListener(this)
+        binding.btnTrue.setOnClickListener(this)
 
         viewModel.uploadProgress.observe(this, { uploadProgress ->
             binding.progressBar.visibility = View.VISIBLE
@@ -51,8 +51,8 @@ class PreviewImageActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when(view) {
-            binding.btnNo -> finish()
-            binding.btnYes -> {
+            binding.btnFalse -> finish()
+            binding.btnTrue -> {
                 if (isImageUriValid) {
                     if (imagePath != null) {
                         viewModel.getPrediction(null, imagePath)
@@ -74,7 +74,7 @@ class PreviewImageActivity : AppCompatActivity(), View.OnClickListener {
                     isImageUriValid = true
                     binding.imgPreview.setImageBitmap(bitmap)
                 } else {
-                    hidePreviewImage()
+                    binding.previewImageCard.visibility = View.GONE
                     Toast.makeText(this, getString(R.string.not_valid_image_message), Toast.LENGTH_LONG).show()
                     finish()
                 }
@@ -86,15 +86,8 @@ class PreviewImageActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun hidePreviewImage() {
-        binding.btnNo.visibility = View.GONE
-        binding.btnYes.visibility = View.GONE
-        binding.imgPreview.visibility = View.GONE
-        binding.tvQuestion.visibility = View.GONE
-    }
-
     private fun showUploadProgress() {
-        hidePreviewImage()
+        binding.previewImageCard.visibility = View.GONE
         binding.previewImageLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
         binding.tvProgressStatus.visibility = View.VISIBLE
     }
@@ -110,15 +103,22 @@ class PreviewImageActivity : AppCompatActivity(), View.OnClickListener {
             animation.addListener(object: AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
                     if (viewModel.isUploadSuccess.value == true) {
-                        if (viewModel.isDiseaseFound.value == false) {
-                            val intent = Intent(this@PreviewImageActivity, ErrorActivity::class.java)
-                            intent.putExtra(ErrorActivity.ERROR_CODE_EXTRA, ErrorActivity.DISEASE_NOT_FOUND_ERROR_CODE)
-                            startActivity(intent)
-                            finish()
+                        if (viewModel.isNailRecognized.value == true) {
+                            if (viewModel.isDiseaseFound.value == false) {
+                                val intent = Intent(this@PreviewImageActivity, ErrorActivity::class.java)
+                                intent.putExtra(ErrorActivity.ERROR_CODE_EXTRA, ErrorActivity.DISEASE_NOT_FOUND_ERROR_CODE)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                val intent = Intent(this@PreviewImageActivity, DetailActivity::class.java)
+                                intent.putExtra(DetailActivity.IMAGE_URI_EXTRA, imageUri.toString())
+                                intent.putExtra(DetailActivity.RESPONSE_EXTRA, viewModel.predictionResult.value)
+                                startActivity(intent)
+                                finish()
+                            }
                         } else {
-                            val intent = Intent(this@PreviewImageActivity, DetailActivity::class.java)
-                            intent.putExtra(DetailActivity.IMAGE_URI_EXTRA, imageUri.toString())
-                            intent.putExtra(DetailActivity.RESPONSE_EXTRA, viewModel.predictionResult.value)
+                            val intent = Intent(this@PreviewImageActivity, ErrorActivity::class.java)
+                            intent.putExtra(ErrorActivity.ERROR_CODE_EXTRA, ErrorActivity.NOT_NAIL_OBJECT_ERROR_CODE)
                             startActivity(intent)
                             finish()
                         }
