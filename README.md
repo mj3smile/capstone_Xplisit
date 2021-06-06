@@ -86,4 +86,39 @@
 
 <!-- buat ML -->
 <h2>Machine Learning</h2>
+Dataset
+Nail Diseases https://www.kaggle.com/reubenindustrustech/nail-dataset-new and https://figshare.com/articles/dataset/Model_Onychomycosis_Training_Datasets_JPG_thumbnails_and_Validation_Datasets_JPG_images_/5398573 
+
+
+18 classes of Dataset are:
+
+1. Darier's disease
+2. Muehrck-e's lines
+3. aloperia areata
+4. beau's lines
+5. bluish nail
+6. clubbing
+7. eczema
+8. Lindsay nail
+9. koilonychia
+10. leukonychia
+11. onycholycis
+12. pale nail
+13. red lunula
+14. splinter hemmorrage
+15. terry's nail
+16. white nail
+17. yellow nails
+18. We add case in Normal Nail 
+
+
+Steps:
+1. Download Dataset , then Unzip it, split dataset ,the data preprocessing Training
+2. Train the model with CNN base model
+3. Make a training and testing batch using train generator
+4. Training the model with 3 type class dataset
+5. Improve Training the model with 18 type class dataset
+6. Improve Training the model with 15 type class dataset, remove 3 type class that contain less than 20
+7. Improve the model with transfer learning model Xception
+8. Saved the model weight and .json
 
