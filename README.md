@@ -63,8 +63,8 @@
   <li>Click <code>CREATE JOB</code></li>
   <li>Give name of the job</li>
   <li>Add description if necessary</li>
-  <li>For <code>Frequency</code>, fill it with <code>"* * * * *"</code> -> without <code>""</code>
-    <blockquote>This will run the job every 1 minute</blockquote>
+  <li>For <code>Frequency</code>, fill it with <code>"*/5 * * * *"</code> -> without <code>""</code>
+    <blockquote>This will run the job every 5 minutes, this is necessary because Cloud Function has a cold start which means if the Functions is not used for a certain period of time, it will take time to make the Functions run.<br> For more information, you can check link below:<br>https://mikhail.io/serverless/coldstarts/big3/#:~:text=Instances%20of%20cloud%20functions%20are%20added%20and%20removed,in%20Serverless%20Functions.%20When%20Does%20Cold%20Start%20Happen%3F</blockquote>
   </li>
   <li>For <code>Timezone</code>, it's up to you or you can adjust it with your timezone</li>
   <li>For <code>Target type</code>, choose <code>HTTP</code></li>
