@@ -111,14 +111,15 @@ Nail Diseases https://www.kaggle.com/reubenindustrustech/nail-dataset-new and ht
 17. yellow nails
 18. We add case in Normal Nail 
 
-
 Steps:
-1. Download Dataset , then Unzip it, split dataset ,the data preprocessing Training
-2. Train the model with CNN base model
-3. Make a training and testing batch using train generator
-4. Training the model with 3 type class dataset
-5. Improve Training the model with 18 type class dataset
-6. Improve Training the model with 15 type class dataset, remove 3 type class that contain less than 20
-7. Improve the model with transfer learning model Xception
-8. Saved the model weight and .json
+1. Download Dataset ,then Unzip it, 
+2. Split dataset into training and testing
+3. Data Preprocessing 
+4. Train the model with CNN base model
+5. Make a training and testing batch using train generator
+6. Training the model with 3 type class dataset
+7. Improve Training the model with 18 type class dataset
+8. Improve Training the model with 15 type class dataset, remove 3 type class that contain less than 20
+9. Improve the model with transfer learning model Xception
+10. Saved the model weight and .json
 
