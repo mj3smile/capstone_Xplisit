@@ -1,8 +1,22 @@
 <h1>CAPSTONE PROJECT / B21-CAP0339</h1>
 <h3>Xplicit Team</h3>
 <hr>
+
+<h2>APP</h2>
+1. open the app
+2. choose to "upload an existing picture" or "take a picture"
+![image](https://user-images.githubusercontent.com/72664505/120984504-ea09b200-c7a4-11eb-9699-8a79b4b9e214.png)
+3. if app can't detect the nail, it will appear like this 
+![image](https://user-images.githubusercontent.com/72664505/120985198-964b9880-c7a5-11eb-8b60-a9dd5f1b0fe4.png)
+if app can detect the nail and any disease is detected, it will appear like this 
+![image](https://user-images.githubusercontent.com/72664505/120984699-18878d00-c7a5-11eb-9f12-5890c4338cb4.png)
+But if app can detect the nail and any disease is NOT detected, it will appear like this 
+![image](https://user-images.githubusercontent.com/72664505/120984848-38b74c00-c7a5-11eb-8034-6b0cfdefeb88.png)
+
 <!-- buat Android -->
 <h2>Android</h2>
+
+Language: Kotlin
 
 
 
