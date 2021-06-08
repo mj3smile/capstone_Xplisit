@@ -90,11 +90,13 @@ class PreviewImageActivity : AppCompatActivity(), View.OnClickListener {
         binding.previewImageCard.visibility = View.GONE
         binding.previewImageLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
         binding.tvProgressStatus.visibility = View.VISIBLE
+
+        binding.progressBar.max = 100 * 100
     }
 
     private fun setUploadProgress(progressBar: ProgressBar, progressTo: Int) {
-        val animation = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, progressTo)
-        animation.duration = 10000
+        val animation = ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress, 100 * progressTo)
+        animation.duration = 5000
         animation.setAutoCancel(true)
         animation.interpolator = DecelerateInterpolator()
         animation.start()

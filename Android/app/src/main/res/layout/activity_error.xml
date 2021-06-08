@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/img_failed"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:src="@drawable/disease_not_found_error"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
