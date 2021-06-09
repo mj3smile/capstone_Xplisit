@@ -39,10 +39,10 @@ Language: Kotlin
     <ol type="a">
       <li>For disease data <code>on Cloud/data</code>
       </li>
-      <li>For model 1 <code>on Cloud/model-filter/</code>
+      <li>For model 1 <code>on ML/model/model - deteksi kuku atau bukan/</code>
         <blockquote>Make sure you store the model.json and model.h5</blockquote>
       </li>
-      <li>For model 2 <code>on Cloud/model-predict</code>
+      <li>For model 2 <code>on ML/model/model/</code>
         <blockquote>Make sure you store the model.json and model.h5</blockquote>
       </li>
     </ol>
